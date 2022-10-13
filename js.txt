@@ -1,0 +1,462 @@
+//FUNCIÓN QUE VALIDA EL FORMATO DE RUT PARA LA BÚSQUEDA DE LA INFORMACIÓN
+function validaFormBusquedaRut() {
+
+    var datoBuscar = document.getElementById('txtBuscaRut').value;
+    var boton = 1
+
+
+    if (datoBuscar == '' || datoBuscar == null || datoBuscar.length == 0) {
+        Swal.fire({
+            title: '<p class="text-uppercase title-principal">Mensaje</p>',
+            icon: 'error',
+            html: '<span class="title-principal text-uppercase">No se han detectado valores en el campo, por favor ingrese Rut</span>',
+            confirmButtonColor: '#0d6efd',
+            confirmButtonText: 'OK'
+        });
+
+        return false;
+
+    } else {
+
+        $.ajax({
+            url: "../../../docs/public/core/rap/view/estudiantes/select_estudiante.php",
+            type: 'POST',
+            dataType: "HTML",
+            data: {
+                datoBuscar: datoBuscar,
+                boton: boton
+            },
+
+            //MIESTRAS "PROCESA"
+            beforeSend: function() {
+
+                Swal.fire({
+                    timer: 1200,
+                    width: '8%',
+                    timerProgressBar: false,
+                    showConfirmButton: false,
+
+                    didOpen: () => {
+                        Swal.showLoading(Swal.getDenyButton())
+                    }
+                });
+
+            },
+            //CUANDO EXISTE UN ERROR
+            error: function(data) {
+
+                if (data == 0) { //SI EL ERRROR ES DE CONEXIÓN U OTRO DE SQL
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Ocurrió un error al intentar conectarse.',
+                        text: '¡Inténtelo nuevamente!',
+                        confirmButtonColor: '#005193',
+                    });
+                }
+
+            },
+
+        });
+    }
+    /*else if (!/^[0-9]+[-|-]{1}[0-9kK]{1}$/.test(buscaRut)) {
+           Swal.fire({
+               title: '<p>Mensaje</p>',
+               icon: 'error',
+               html: '<span class="title-principal text-uppercase">Formato de Rut incorrecto.</span>',
+               confirmButtonColor: '#0d6efd',
+               confirmButtonText: 'OK'
+           });
+           return false;
+           */
+    // $('#frmBusquedaRut').submit(function(e) {
+    //e.preventDefault();
+
+    //var form = $(this);
+    //var url = form.attr('action');
+
+    /*let timerInterval
+    Swal.fire({
+            title: 'Auto close alert!',
+            html: 'I will close in <b></b> milliseconds.',
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: () => {
+                Swal.showLoading()
+                const b = Swal.getHtmlContainer().querySelector('b')
+                timerInterval = setInterval(() => {
+                    b.textContent = Swal.getTimerLeft()
+                }, 100)
+            },
+            willClose: () => {
+                clearInterval(timerInterval)
+            }
+        }).then((result) => {
+            if (result.dismiss === Swal.DismissReason.timer) {
+
+                $.ajax({
+                    type: "POST",
+                    dataType: "HTML",
+                    url: "../../../docs/public/core/rap/view/estudiantes/select_estudiante.php",
+                    //data: form.serialize(),
+                    data: {
+                        datoBuscar: datoBuscar,
+                        boton: boton
+                    },
+
+                    success: function(data) {
+                        $('#resultadoEstudiantes').html();
+                        $('#resultadoEstudiantes').append(data);
+                    }
+                });
+            }
+        })
+        //});*/
+}
+
+//FUNCIÓN QUE VALIDA LA BÚSQUEDA POR CARRERA.
+function validaFormBusquedaCarrera() {
+
+    datoBuscar = document.getElementById('selectCarrera').value;
+    boton = 2
+
+    if (datoBuscar == '') {
+        Swal.fire({
+            title: '<p class="text-uppercase title-principal">Mensaje</p>',
+            icon: 'error',
+            html: '<p class="text-uppercase title-principal">Seleccione una opción.</p>',
+            confirmButtonColor: '#0d6efd',
+            confirmButtonText: 'OK'
+        });
+        return false;
+    } else {
+        $('#frmBusquedaCarrera').submit(function(e) {
+            e.preventDefault();
+
+            formdata = new FormData();
+            formData.append('datoBuscar', datoBuscar);
+            formData.append('boton', boton);
+            var form = $(this);
+            var url = form.attr('action');
+
+            let timerInterval
+            Swal.fire({
+                title: 'Auto close alert!',
+                html: 'I will close in <b></b> milliseconds.',
+                timer: 2000,
+                timerProgressBar: true,
+                didOpen: () => {
+                    Swal.showLoading()
+                    const b = Swal.getHtmlContainer().querySelector('b')
+                    timerInterval = setInterval(() => {
+                        b.textContent = Swal.getTimerLeft()
+                    }, 100)
+                },
+                willClose: () => {
+                    clearInterval(timerInterval)
+                }
+            }).then((result) => {
+                if (result.dismiss === Swal.DismissReason.timer) {
+
+                    $.ajax({
+                        type: "POST",
+                        url: "../../../docs/public/core/rap/view/estudiantes/select_estudiante.php",
+                        data: form.serialize(),
+                        //data: {
+                        //    datoBuscar: datoBuscar,
+                        //    boton: boton
+                        //},
+
+                        success: function(data) {
+                            $('#resultadoEstudiantes').html();
+                            $('#resultadoEstudiantes').append(data);
+                        }
+                    });
+                }
+            })
+        });
+    }
+
+}
+
+
+//FUNCIÓN QUE VALIDA LA BÚSQUEDA POR CARRERA.
+function validaFormBusquedaCondicion() {
+
+    datoBuscar = document.getElementById('selectCarrera').value;
+    boton = 2
+
+    if (datoBuscar == '') {
+        Swal.fire({
+            title: '<p class="text-uppercase title-principal">Mensaje</p>',
+            icon: 'error',
+            html: '<p class="text-uppercase title-principal">Seleccione una opción.</p>',
+            confirmButtonColor: '#0d6efd',
+            confirmButtonText: 'OK'
+        });
+        return false;
+    } else {
+        $('#frmBusquedaCarrera').submit(function(e) {
+            e.preventDefault();
+
+            formdata = new FormData();
+            formData.append('datoBuscar', datoBuscar);
+            formData.append('boton', boton);
+            var form = $(this);
+            var url = form.attr('action');
+
+            let timerInterval
+            Swal.fire({
+                title: 'Auto close alert!',
+                html: 'I will close in <b></b> milliseconds.',
+                timer: 2000,
+                timerProgressBar: true,
+                didOpen: () => {
+                    Swal.showLoading()
+                    const b = Swal.getHtmlContainer().querySelector('b')
+                    timerInterval = setInterval(() => {
+                        b.textContent = Swal.getTimerLeft()
+                    }, 100)
+                },
+                willClose: () => {
+                    clearInterval(timerInterval)
+                }
+            }).then((result) => {
+                if (result.dismiss === Swal.DismissReason.timer) {
+
+                    $.ajax({
+                        type: "POST",
+                        url: "../../../docs/public/core/rap/view/estudiantes/select_estudiante.php",
+                        data: form.serialize(),
+                        //data: {
+                        //    datoBuscar: datoBuscar,
+                        //    boton: boton
+                        //},
+
+                        success: function(data) {
+                            $('#resultadoEstudiantes').html();
+                            $('#resultadoEstudiantes').append(data);
+                        }
+                    });
+                }
+            })
+        });
+    }
+
+}
+
+//FUNCIÓN QUE VALIDA LA BÚSQUEDA VÍA CONDICIÓN ADMMISIÓN
+function validaFormBusquedaCondicion() {
+    condicionAdmision = document.getElementById('condicion').value;
+
+    if (condicionAdmision == '') {
+        Swal.fire({
+            title: '<p class="text-uppercase title-principal">Mensaje</p>',
+            icon: 'error',
+            html: '<p class="text-uppercase title-principal">Seleccione una opción.</p>',
+            confirmButtonColor: '#0d6efd',
+            confirmButtonText: 'OK'
+        });
+        return false;
+    } else {
+        Swal.fire({
+            title: '<p class="text-uppercase title-principal">Mensaje</p>',
+            icon: 'success',
+            html: '<p class="text-uppercase title-principal">Datos ingresados correctamente.</p>',
+            confirmButtonColor: '#0d6efd',
+            confirmButtonText: 'OK'
+        });
+    }
+}
+
+
+
+//FUNCIÓN QUE VALIDA EL FORMATO DE RUT PARA LA BÚSQUEDA DE LA INFORMACIÓN
+function validaFormBusquedaRut() {
+
+    var datoBuscar = document.getElementById('txtBuscaRut').value;
+    var boton = 1
+
+
+    if (datoBuscar == '' || datoBuscar == null || datoBuscar.length == 0) {
+        Swal.fire({
+            title: '<p class="text-uppercase title-principal">Mensaje</p>',
+            icon: 'error',
+            html: '<span class="title-principal text-uppercase">No se han detectado valores en el campo, por favor ingrese Rut</span>',
+            confirmButtonColor: '#0d6efd',
+            confirmButtonText: 'OK'
+        });
+
+        return false;
+
+    } else {
+
+        $.ajax({
+            url: "../../../docs/public/core/rap/view/estudiantes/select_estudiante.php",
+            type: 'POST',
+            dataType: "HTML",
+            data: {
+                datoBuscar: datoBuscar,
+                boton: boton
+            },
+
+            //MIESTRAS "PROCESA"
+            beforeSend: function() {
+
+                Swal.fire({
+                    timer: 1200,
+                    width: '8%',
+                    timerProgressBar: false,
+                    showConfirmButton: false,
+
+                    didOpen: () => {
+                        Swal.showLoading(Swal.getDenyButton())
+                    }
+                });
+
+            },
+            //CUANDO EXISTE UN ERROR
+            error: function(data) {
+
+                if (data == 0) { //SI EL ERRROR ES DE CONEXIÓN U OTRO DE SQL
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Ocurrió un error al intentar conectarse.',
+                        text: '¡Inténtelo nuevamente!',
+                        confirmButtonColor: '#005193',
+                    });
+                }
+
+            },
+
+        });
+    }
+    /*else if (!/^[0-9]+[-|-]{1}[0-9kK]{1}$/.test(buscaRut)) {
+           Swal.fire({
+               title: '<p>Mensaje</p>',
+               icon: 'error',
+               html: '<span class="title-principal text-uppercase">Formato de Rut incorrecto.</span>',
+               confirmButtonColor: '#0d6efd',
+               confirmButtonText: 'OK'
+           });
+           return false;
+           */
+
+    /*if (!/^[0-9]+[-|-]{1}[0-9kK]{1}$/.test(buscaRut)) {
+
+           Swal.fire({
+               title: '<p>Mensaje</p>',
+               icon: 'error',
+               html: '<span class="title-principal text-uppercase">Formato de Rut incorrecto.</span>',
+               confirmButtonColor: '#0d6efd',
+               confirmButtonText: 'OK'
+           });
+           return false;
+       }*/
+    // $('#frmBusquedaRut').submit(function(e) {
+    //e.preventDefault();
+
+    //var form = $(this);
+    //var url = form.attr('action');
+
+    /*let timerInterval
+    Swal.fire({
+            title: 'Auto close alert!',
+            html: 'I will close in <b></b> milliseconds.',
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: () => {
+                Swal.showLoading()
+                const b = Swal.getHtmlContainer().querySelector('b')
+                timerInterval = setInterval(() => {
+                    b.textContent = Swal.getTimerLeft()
+                }, 100)
+            },
+            willClose: () => {
+                clearInterval(timerInterval)
+            }
+        }).then((result) => {
+            if (result.dismiss === Swal.DismissReason.timer) {
+
+                $.ajax({
+                    type: "POST",
+                    dataType: "HTML",
+                    url: "../../../docs/public/core/rap/view/estudiantes/select_estudiante.php",
+                    //data: form.serialize(),
+                    data: {
+                        datoBuscar: datoBuscar,
+                        boton: boton
+                    },
+
+                    success: function(data) {
+                        $('#resultadoEstudiantes').html();
+                        $('#resultadoEstudiantes').append(data);
+                    }
+                });
+            }
+        })
+        //});*/
+} 
+
+function validaFormBusquedaCondicion() {
+
+    condicionAdmision = document.getElementById('condicion').value;
+    boton = 4;
+    datoBuscar;
+    boton;
+
+    if (datoBuscar == '') {
+        Swal.fire({
+            title: '<p class="text-uppercase title-principal">Mensaje</p>',
+            icon: 'error',
+            html: '<p class="text-uppercase title-principal">Seleccione una opción.</p>',
+            confirmButtonColor: '#0d6efd',
+            confirmButtonText: 'OK'
+        });
+    } else {
+        $('#frmBusquedaCondicion').submit(function(e) {
+
+            e.preventDefault();
+
+            formdata = new FormData();
+            formData.append('datoBuscar', datoBuscar);
+            formData.append('boton', boton);
+            var form = $(this);
+            var url = form.attr('action');
+
+            let timerInterval
+            Swal.fire({
+                title: 'Auto close alert!',
+                html: 'I will close in <b></b> milliseconds.',
+                timer: 2000,
+                timerProgressBar: true,
+                didOpen: () => {
+                    Swal.showLoading()
+                    const b = Swal.getHtmlContainer().querySelector('b')
+                    timerInterval = setInterval(() => {
+                        b.textContent = Swal.getTimerLeft()
+                    }, 100)
+                },
+                willClose: () => {
+                    clearInterval(timerInterval)
+                }
+            }).then((result) => {
+                if (result.dismiss === Swal.DismissReason.timer) {
+
+                    $.ajax({
+                        type: "POST",
+                        url: "../../../docs/public/core/rap/view/estudiantes/select_estudiante.php",
+                        data: form.serialize(),
+                        data: {
+                            datoBuscar: datoBuscar,
+                            boton: boton
+                        },
+                        //success: function(data) {
+                        //    $('#resultadoEstudiantes').html();
+                        //    $('#resultadoEstudiantes').append(data);
+                        //}
+                    });
+                }
+            })
+        });
+    }
+}

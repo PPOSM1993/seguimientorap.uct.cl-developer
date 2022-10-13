@@ -1,0 +1,1114 @@
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((resultado) => {
+            if (resultado.isConfirmed) {
+                Swal.fire(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                )
+            }
+        })
+
+        $.ajax({
+            type: "POST",
+            url: "../../../docs/public/core/rap/view/instrumentos/delete_instrumento.php",
+            dataType: "html",
+            data: { item: item },
+
+            //success: function(resultado) {
+
+            //}
+
+        });
+
+        Swal.fire({
+            title: 'ALERTA DE CONFIRMACIÓN',
+            text: "¿Desea eliminar este instrumento?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si',
+            cancelButtonText: 'No'
+
+        }).then((resultado) => {
+
+            if (resultado.isConfirmed) {
+                $.ajax({
+                    type: "POST",
+                    url: "../../../docs/public/core/rap/view/instrumentos/delete_instrumento.php",
+                    dataType: "html",
+                    data: { item: item },
+
+                    success: function(resultado) {
+                        Swal.fire(
+                                'Eliminado!',
+                                'El instrumento ha sido eliminado correctamente.',
+                                'success',
+
+                            ),
+                            $(location).attr('href', '../../../?menu=listarInstrumentos');
+                    }
+
+                });
+            }
+        })
+
+<td class="text-center">
+ <!-- Modal -->
+<div class="modal fade" id="modal-actualizar-instrumento" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-xl">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title" id="exampleModalLabel">actualización de instrumentos de evaluación</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+ </div>
+<div class="modal-body">
+    <div class="container-fluid">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <form id="frmInstrumentos" name="frmInstrumentos" action="listarInstrumentos.php" method="POST" class="frmInstrumentos text-uppercase">
+                        <div class="row">
+
+                            <div class="col-sm-12 title-principal">
+                                <div class="form-group">
+                                        <label class="text-uppercase">carrera(*)</label>
+        <select class=" carrera selectOption form-control  form-control-sm selectCarrera select2-container select2 select2-primary text-uppercase" name="carrera" id="carrera" style="width:100%;" value="">
+            <?php
+            //ARCHIVO QUE TRAE LAS CARRERAS REGISTRADAS
+            include $_SERVER["DOCUMENT_ROOT"] . "/docs/public/core/rap/view/instrumentos/query/carrera.php";
+            ?>
+        </select>
+    </div>
+</div>
+
+<div class="col-sm-6 title-principal">
+    <div class="form-group">
+        <label>plan carrera(*)</label>
+        <select name="planCarrera" id="planCarrera" style="width:100%;" class="planCarrera selectOption form-control form-control-sm planCarrera select2-container select2 select2-primary text-uppercase">
+            <?php
+            //ARCHIVO QUE TRAE LOS PLANES DE CARRERAS REGISTRADOS
+            include $_SERVER["DOCUMENT_ROOT"] . "/docs/public/core/rap/view/instrumentos/query/plan_carrera.php";
+            ?>
+        </select>
+    </div>
+</div>
+
+                                                                                            <div class="col-sm-6 title-principal">
+                                                                                                <div class="form-group">
+                                                                                                    <label for="" class="text-uppercase">vigencia(*)</label>
+                                                                                                    <br>
+                                                                                                    <input type="hidden" name="tins_codigo" id="tins_codigo" value="">
+                                                                                                    <select name="tinsVigente" id="tinsVigente" style="width:100%;" class="tinsVigente form-control form-control-sm tinsVigente text-uppercase">
+                                                                                                        <option value=""></option>
+                                                                                                        <option value="S">S</option>
+                                                                                                        <option value="N">N</option>
+                                                                                                    </select>
+                                                                                                </div>
+                                                                                            </div>
+
+                                                                                            <div class="col-lg-12">
+                                                                                                <div class="dropdown-divider"></div>
+                                                                                            </div>
+
+                                                                                            <div class="col-sm-10 title-principal">
+                                                                                                <div class="form-group">
+                                                                                                    <label for="" class="text-uppercase">instrumento(*)</label>
+                                                                                                    <br>
+                                                                                                    <input type="text" class="tinsNombre form-control form-control-sm text-uppercase" id="instrumento" name="instrumento" placeholder="ingrese nombre instrumento">
+
+                                                                                                </div>
+                                                                                            </div>
+
+                                                                                            <div class="col-sm-2 title-principal">
+                                                                                                <div class="form-group">
+                                                                                                    <label for="" class="text-uppercase">porcentaje(*)</label>
+                                                                                                    <br>
+                                                                                                    <input type="text" class="tinsNombre form-control form-control-sm text-uppercase" id="instrumento" name="instrumento" placeholder="ingrese porcentaje">
+
+                                                                                                </div>
+                                                                                            </div>
+
+                                                                                            <div class="col-sm-12 title-principal">
+                                                                                                <div class="form-group">
+                                                                                                    <label for="" class="text-uppercase">descripción</label>
+                                                                                                    <textarea name="tinsDescripcion" id="tinsDescripcion" placeholder="Ingrese Descripción" cols="10" rows="5" class="form-control tinsDescripcion text-uppercase title-principal"></textarea>
+                                                                                                </div>
+                                                                                            </div>
+
+                                                                                        </div>
+                                                                                        <div class="form-group text-center title-principal">
+                                                                                            <button id="btnSave" type="button" class="btnSave btn btn-success text-uppercase" onclick="validaFormInstrumento();"><i class="fa fa-save"></i> guardar</button>
+                                                                                        </div>
+
+                                                                                    </form>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-primary" data-dismiss="modal">
+                                                                        <i class="fa fa-close"></i>
+                                                                    </button>
+                                                                    <button type="button" class="btn btn-success">
+                                                                        <i class="fa fa-save"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+ 
+                                                    echo '<a href="" class="updateInstrumento btn btn-warning" type="button" id="updateInstrumento'.$instrumento[" tins_codigo"].'" data="'.$instrumento[" tins_codigo"].'">
+                                                            <i class="fa fa-edit"></i>
+</a>';
+echo '<a href="" id="deleteInstrumento' . $instrumento["tins_codigo"] . '" type="button" class="deleteInstrumento btn btn-danger" data="' . $instrumento["tins_codigo"] . '">
+<i class="fa fa-trash" aria-hidden="true"></i>
+</a>';
+</td>
+
+<select class=" carrera selectOption form-control  form-control-sm selectCarrera select2-container select2 select2-primary text-uppercase" name="carrera" id="carrera" style="width:100%;" value="">
+<?php
+//ARCHIVO QUE TRAE LAS CARRERAS REGISTRADAS
+include $_SERVER["DOCUMENT_ROOT"] . "/docs/public/core/rap/view/instrumentos/query/carrera.php";
+?>
+</select>
+
+
+                <div class="container-fluid">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <form id="frmInstrumentos" name="frmInstrumentos" action="listarInstrumentos.php" method="POST" class="frmInstrumentos text-uppercase">
+                                    <input type="hidden" id="tins_codigo" name="tins_codigo" value="">
+                                    <input type="hidden" id="trid" name="trid" value="">
+                                    <div class="row">
+                                        <div class="col-sm-12 title-principal">
+                                            <div class="form-group">
+                                                <label for="txtCarrera" class="text-uppercase">carrera(*)</label>
+                                                <input type="text" class="carrera form-control form-control-sm text-uppercase" id="carrera" name="carrera" placeholder="ingrese nombre instrumento">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6 title-principal">
+                                            <div class="form-group">
+                                                <label for="txtPlanCarrera" class="text-uppercase">plan carrera(*)</label>
+                                                <input type="text" class="planCarrera form-control form-control-sm text-uppercase" id="planCarrera" name="planCarrera" placeholder="ingrese nombre instrumento">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6 title-principal">
+                                            <div class="form-group">
+                                                <label for="txtVigencia" class="text-uppercase">vigencia(*)</label>
+                                                <br>
+                                                <select name="tinsVigente" id="tinsVigente" style="width:100%;" class="tinsVigente form-control form-control-sm tinsVigente text-uppercase">
+                                                    <option value=""></option>
+                                                    <option value="S">S</option>
+                                                    <option value="N">N</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-12">
+                                            <div class="dropdown-divider"></div>
+                                        </div>
+
+                                        <div class="col-sm-10 title-principal">
+                                            <div class="form-group">
+                                                <label for="txtInstrumento" class="text-uppercase">instrumento(*)</label>
+                                                <br>
+                                                <input type="text" class="tinsNombre form-control form-control-sm text-uppercase" id="instrumento" name="instrumento" placeholder="ingrese nombre instrumento">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-2 title-principal">
+                                            <div class="form-group">
+                                                <label for="" class="text-uppercase">porcentaje(*)</label>
+                                                <br>
+                                                <input type="text" class="tinsNombre form-control form-control-sm text-uppercase" id="instrumento" name="instrumento" placeholder="ingrese porcentaje">
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-12 title-principal">
+                                            <div class="form-group">
+                                                <label for="" class="text-uppercase">descripción</label>
+                                                <textarea name="tinsDescripcion" id="tinsDescripcion" placeholder="Ingrese Descripción" cols="10" rows="5" class="form-control tinsDescripcion text-uppercase title-principal"></textarea>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group text-center title-principal">
+                                        <button id="btnSave" type="button" class="btnSave btn btn-success text-uppercase" onclick="validaFormInstrumento();"><i class="fa fa-save"></i> guardar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+<div class="modal fade" id="modal-actualizar-instrumento" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title title-principal text-uppercase" id="exampleModalLabel">actualización de instrumentos de evaluación</h5>
+                <button type="button" class="close capturarInstrumento" data-dismiss="modal" aria-label="Close" id="extraerInfo">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+
+                    <div class="container-fluid">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-sm-12 title-principal">
+                                            <div class="form-group">
+                                                <label for="txtCarrera" class="text-uppercase">carrera(*)</label>
+                                                <input type="text" class="carrera form-control form-control-sm text-uppercase" id="carrera" name="carrera" placeholder="ingrese nombre instrumento">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6 title-principal">
+                                            <div class="form-group">
+                                                <label for="txtPlanCarrera" class="text-uppercase">plan carrera(*)</label>
+                                                <input type="text" class="planCarrera form-control form-control-sm text-uppercase" id="planCarrera" name="planCarrera" placeholder="ingrese nombre instrumento">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6 title-principal">
+                                            <div class="form-group">
+                                                <label for="txtVigencia" class="text-uppercase">vigencia(*)</label>
+                                                <br>
+                                                <select name="tinsVigente" id="tinsVigente" style="width:100%;" class="tinsVigente form-control form-control-sm tinsVigente text-uppercase">
+                                                    <option value=""></option>
+                                                    <option value="S">S</option>
+                                                    <option value="N">N</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-12">
+                                            <div class="dropdown-divider"></div>
+                                        </div>
+
+                                        <div class="col-sm-10 title-principal">
+                                            <div class="form-group">
+                                                <label for="txtInstrumento" class="text-uppercase">instrumento(*)</label>
+                                                <br>
+                                                <input type="text" class="tinsNombre form-control form-control-sm text-uppercase" id="instrumento" name="instrumento" placeholder="ingrese nombre instrumento">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-2 title-principal">
+                                            <div class="form-group">
+                                                <label for="" class="text-uppercase">porcentaje(*)</label>
+                                                <br>
+                                                <input type="text" class="tinsNombre form-control form-control-sm text-uppercase" id="instrumento" name="instrumento" placeholder="ingrese porcentaje">
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-12 title-principal">
+                                            <div class="form-group">
+                                                <label for="" class="text-uppercase">descripción</label>
+                                                <textarea name="tinsDescripcion" id="tinsDescripcion" placeholder="Ingrese Descripción" cols="10" rows="5" class="form-control tinsDescripcion text-uppercase title-principal"></textarea>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <!--
+                                    <div class="form-group text-center title-principal">
+                                        <button id="btnSave" type="button" class="btnSave btn btn-success text-uppercase" onclick="validaFormInstrumento();"><i class="fa fa-save"></i> guardar</button>
+                                    </div>
+                                    -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    /*$('#instrumento').change(function() {
+            if ($(this).val() != '') {
+                var item = $(this).attr("tins_codigo");
+                //var instrumento_id = $(this).val();
+
+                $.ajax({
+                    type: "POST",
+                    url: '/docs/public/core/rap/view/estudiantes/query/areas.php',
+                    data: item,
+                    cache: false,
+                    success: function(areas) {
+                        $(".tblAreas").html(areas);
+                    }
+                });
+            }
+        })
+        /*$('.instrumento').change(function() {
+            var item = $(this).attr("tins_codigo");
+            //var post_id = 'id' + tins_codigo;
+
+            $.ajax({
+                type: "POST",
+                url: '/docs/public/core/rap/view/estudiantes/query/areas.php',
+                data: { item: item },
+                success: function(areas) {
+                    $(".tblAreas").html(areas);
+                }
+            });
+        });*/
+
+    /*$('.instrumento').select(function() {
+    });*/
+
+$(document).ready(function() {
+    $("#instrumento").multiSelect();
+    var item = $(this).attr("tins_codigo");
+
+    $("#instrumento").change(function() {
+        $.ajax({
+            type: "POST",
+            url: '/docs/public/core/rap/view/estudiantes/query/areas.php',
+            data: { item: item },
+            success: function(areas) {
+                $(".tblAreas").html(areas);
+            }
+        });
+    });
+})
+
+
+
+function sumarLogro() {
+    var total = 0;
+    var tablaLogros = document.getElementById('tblPostulantes');
+    var contadorFilas = '';
+
+    $(document).ready(function() {
+
+        var nrow = 0;
+
+        $('.logroArea').each(function() {
+            if (isNaN(parseFloat($(this).val()))) {
+                total += 0;
+            } else {
+
+                total += parseFloat($(this).val());
+            }
+        });
+        $(".cuerpo").each(function() {
+            nrow++;
+            //document.getElementById('totalFilas').innerText = contadorFilas.children.length;
+            //document.getElementById('logroObtenido').innerHTML = total / contadorFilas.children.length;
+
+        });
+
+        //document.getElementById('totalFilas').innerText = contadorFilas.children.length;
+        //document.getElementById('logroObtenido').innerHTML = total /contadorFilas.children.length;
+        //console.log(contadorFilas.children.length);
+
+        console.log(nrow);
+
+    })
+
+}
+
+/*    echo '<thead class="text-uppercase text-center">
+    <tr role="row">
+        <th class="sorting text-uppercase">áreas</th>
+        <th class="sorting text-uppercase">Logro Obtenido</th>
+        <th class="sorting text-uppercase">evaluados</th>
+        <th class="sorting text-uppercase">concepto</th>
+    </tr>
+</thead>';
+    foreach ($dato_area as $datos) :
+        echo '<tbody class="text-uppercase">
+    <tr role="row">
+        <td value="' . $datos["rear_codigo"] . '">' . $datos["rear_nombre_area"] . '</td>';
+        if (isset($datos["rear_codigo"])) {
+            echo '<td><input class="form-control form-control-sm logroArea" id="logroArea" type="number" name="logroArea" onkeyup="sumarLogro();"></td>';
+        } else if (!isset($datos["rear_codigo"])) {
+            echo '<td><input class="form-control form-control-sm logroArea" id="logroArea" type="number" name="logroArea" onkeyup="sumarLogro();"></td>';
+        }
+        if (isset($datos["rendido"])) {
+            echo '<td class="text-center"><input class="form-check-input" type="checkbox" id="rendido" onclick="ch_si(this);"></td>';
+        } else {
+            echo '<td class="text-center"><input class="form-check-input" type="checkbox" id="rendido" onclick="ch_si(this);"></td>';
+        }
+        echo'
+    </tr>
+  </tbody>';
+    endforeach;
+    echo '<tfoot class="title-principal">
+            <tr role="row">
+            <td class="text-center text-uppercase">promedio general por áreas</td>
+            <td class="text-center">
+                <span class="text-center logroObtenido" id="logroObtenido"></span>
+            </td>
+            <td class="text-center"><span id="totalFilas" style="display:none;"></span></td>
+            <td class=""></td>
+            </tr>
+          </tfoot>';
+
+*/
+
+
+
+    echo '<thead class="text-uppercase text-center">
+                <tr role="row">
+                    <th class="sorting text-uppercase">áreas</th>
+                    <th class="sorting text-uppercase">Logro Obtenido</th>
+                    <th class="sorting text-uppercase">evaluados</th>
+                    <th class="sorting text-uppercase">Concepto</th>
+                </tr>
+           </thead>';
+    foreach ($dato_area as $datos) :
+        echo '
+        <tbody class="text-uppercase text-center cuerpo">
+            <tr role="row">
+            <td style="display:none" id="areaEvaluacionId">' . $datos["rear_codigo"] . '</td>
+                <td id="areaEvaluacion" value="' . $datos["rear_codigo"] . '">' . $datos["rear_nombre_area"] . '</td>
+                <td><input class="form-control form-control-sm logroArea" id="logroArea" type="number" name="logroArea" onkeyup="sumarLogro();"></td>
+                <td class="text-center">
+                    <button class="btn btn-success btn-sm" onclick="activarLogro();" id="activar"><i class="fa fa-check"></i></button>
+                    <button class="btn btn-danger btn-sm" onclick="desactivarLogro();" id="desactivar"><i class="fa fa-xmark"></i></button>
+                </td>
+                <td class="text-center text-uppercase" id="conepto">
+                <input class="form-control form-control-sm conceptoEvaluacion" id="conceptoEvaluacion" type="text" name="conceptoEvaluacion">
+                </td>
+            </tr>
+        </tbody>';
+    endforeach;
+    echo '<tfoot class="title-principal">
+            <tr role="row">
+            <td class="text-center text-uppercase">promedio general por áreas</td>
+            <td class="text-center">
+                <span class="text-center logroObtenido" id="logroObtenido"></span>
+            </td>
+            <td class="text-center"><span id="totalFilas" style="display:none;"></span></td>
+            <td class=""></td>
+            </tr>
+          </tfoot>';
+
+
+<div class="container-fluid">
+    <!--FILTRADOR QUE PERMITE BUSCAR ESTUDIANTES DE DIVERSAS FORMAS-->
+    <div class="col-12">
+        <div class="card" style="background-color:#B2CDD3;">
+            <div class="card-header">
+                <div class="card-title title-principal text-uppercase" style="font-weight:bold;">Criterios de Búsqueda Estudiantes</div>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" id="btnLimpiar">
+                        <i class="fa fa-eraser"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-2">
+                        <input type="text" name="txtBuscarRut" id="txtBuscarRut" class="form-control form-control-sm title-principal text-uppercase" placeholder="RUT" data-index="0">
+                    </div>
+                    <div class="col-lg-10">
+                        <input type="text" name="txtBuscarNombre" id="txtBuscarNombre" class="form-control form-control-sm title-principal text-uppercase" placeholder="Nombre" data-index="1">
+                    </div>
+
+                    <div class="col-lg-8 title-principal">
+                        <br>
+                        <select class="carrera selectOption form-control form-control-sm selectCarrera select2-container select2 select2-primary text-uppercase title-principal" name="carrera" id="selectBuscaCarrera" style="width:100%;" value="" data-index="2" , role="textbox" aria-readonly="true">
+                            <?php foreach ($estudiantes as $estudiante) { ?>
+                                <option value="<?php echo $estudiante["carr_codigo"]; ?>">
+                                    <?php echo $estudiante["carr_codigo"] . "-" . $estudiante["carr_nombre"]; ?>
+                                </option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                    <div class="col-lg-2">
+                        <br>
+                        <input type="text" name="txtBuscarPlan" id="txtBuscarPlan" class="form-control form-control-sm title-principal text-uppercase" placeholder="Plan Carrera" data-index="3">
+                    </div>
+                    <div class="col-lg-2">
+                        <br>
+                        <input type="text" name="txtBuscaAno" id="txtBuscaAno" class="form-control form-control-sm title-principal text-uppercase" placeholder="Año Ingreso" data-index="5">
+                    </div>
+                    
+                    <div class="col-md-12">
+                    <br>
+                    <div class="form-group text-center title-principal">
+                    <button type="button" class="btn btn-success text-center title-principal" id="btnBuscar">
+                        <i class="fa fa-search"></i> BUSCAR
+                    </button>
+                </div>
+                    </div>
+
+            </div>
+            
+        </div>
+    </div>
+    <!--FINAL FILTRADOR BUSCADOR-->
+
+    <br>
+
+    <!--TÍTULO DE BÚSQUEDA DE ESTUDIANTES-->
+    <div class="col-12">
+        <h3 class="m-0 text-uppercase text-center title-principal">LISTADO ESTUDIANTES </h3>
+    </div>
+    <!--FIN TÍTULO BÚSQUEDA ESTUDIANTES-->
+
+    <div class="col-12">
+        <div class="dropdown-divider"></div>
+    </div>
+
+    <!--LISTADO DE ESTUDIANTES-->
+    <section class="header">
+        <div class="container-fluid title-principal">
+            <div class="row">
+                <div class="col-12">
+                    <br>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <table id="tblPostulantes" class="data-table table table-striped table-bordered title-principal">
+                                        <thead class="text-center text-uppercase">
+                                            <tr role="row" style="background-color:#B2CDD3;">
+                                                <th class="sorting text-uppercase">rut</th>
+                                                <th class="sorting text-uppercase">Estudiante</th>
+                                                <th class="sorting text-uppercase">Carrera</th>
+                                                <th class="sorting text-uppercase">plan carrera</th>
+                                                <th class="sorting text-uppercase">cond. admisión</th>
+                                                <th class="sorting text-uppercase">año ingreso</th>
+                                                <th class="sorting text-uppercase">ingresar</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="text-uppercase">
+                                            <?php foreach ($estudiantes as $estudiante) {
+                                                //VARIABLE QUE PERMITE LA CAPUTRA DE DATOS DEL ESTUDIANTE.
+                                                $datos =
+                                                    $estudiante[0] . "||" .
+                                                    $estudiante[1] . "||" .
+                                                    $estudiante[2] . "||" .
+                                                    $estudiante[3] . "||" .
+                                                    $estudiante[4] . "||" .
+                                                    $estudiante[5] . "||" .
+                                                    $estudiante[6] . "||" .
+                                                    $estudiante[7] . "||" .
+                                                    $estudiante[8] . "||" .
+                                                    $estudiante[9] . "||" .
+                                                    $estudiante[10] . "||" .
+                                                    $estudiante[11] . "||" .
+                                                    $estudiante[12] . "||" .
+                                                    $estudiante[13] . "||" .
+                                                    $estudiante[14] . "||" .
+                                                    $estudiante[15] . "||" .
+                                                    $estudiante[16] . "||" .
+                                                    $estudiante[17] . "||" .
+                                                    $estudiante[18] . "||" .
+                                                    $estudiante[19] . "||" .
+                                                    $estudiante[20] . "||" .
+                                                    $estudiante[21] . "||" .
+                                                    $estudiante[22]
+                                            ?>
+                                                <tr role="row" class="text-left">
+                                                    <td><?php echo $estudiante['estd_rut'] . "-" . $estudiante['estd_dv'] ?></td>
+                                                    <td><?php echo $estudiante['estd_nombre1'] . " " . $estudiante['estd_nombre2'] . " " . $estudiante['estd_apellido1'] . " " .  $estudiante['estd_apellido2'] ?></td>
+                                                    <td><?php echo $estudiante['carr_codigo'] . " - " . $estudiante['carr_nombre'] ?></td>
+                                                    <td class="text-center"><?php echo $estudiante['plan_codigo'] ?></td>
+                                                    <td><?php echo $estudiante['cadm_nombre'] ?></td>
+                                                    <td><?php echo $estudiante['estu_anho_ing'] ?></td>
+                                                    <td class="text-center">
+                                                        <a href="#" data-role="updateEstudiante" class="btn btn-warning" type="button" data-toggle="modal" aria-labelledby="mdlActualizarEstudianteLabel" aria-hidden="true" onclick="agregaEstudiante('<?php echo $datos ?>');" data-target="#mdlActualizarEstudiante" id="<?php echo $instrumento['tins_codigo']; ?>">
+                                                            <i class="fa fa-info"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--FINAL LISTADO ESTUDIANTES-->
+</div>
+
+
+<!--CONTAINER -->
+
+<div class="container-fluid">
+    <!--FILTRADOR QUE PERMITE BUSCAR ESTUDIANTES DE DIVERSAS FORMAS-->
+    <div class="col-12">
+        <div class="card" style="background-color:#B2CDD3;">
+            <div class="card-header">
+                <div class="card-title title-principal text-uppercase" style="font-weight:bold;">Criterios de Búsqueda Estudiantes</div>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" id="btnLimpiar">
+                        <i class="fa fa-eraser"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-2">
+                        <input type="text" name="txtBuscarRut" id="txtBuscarRut" class="form-control form-control-sm title-principal text-uppercase" placeholder="RUT" data-index="0">
+                    </div>
+                    <div class="col-lg-10">
+                        <input type="text" name="txtBuscarNombre" id="txtBuscarNombre" class="form-control form-control-sm title-principal text-uppercase" placeholder="Nombre" data-index="1">
+                    </div>
+
+                    <div class="col-lg-8 title-principal">
+                        <br>
+                        <select class="carrera selectOption form-control form-control-sm selectCarrera select2-container select2 select2-primary text-uppercase title-principal" name="carrera" id="selectBuscaCarrera" style="width:100%;" value="" data-index="2" , role="textbox" aria-readonly="true">
+                            <?php foreach ($estudiantes as $estudiante) { ?>
+                                <option value="<?php echo $estudiante["carr_codigo"]; ?>">
+                                    <?php echo $estudiante["carr_codigo"] . "-" . $estudiante["carr_nombre"]; ?>
+                                </option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                    <div class="col-lg-2">
+                        <br>
+                        <input type="text" name="txtBuscarPlan" id="txtBuscarPlan" class="form-control form-control-sm title-principal text-uppercase" placeholder="Plan Carrera" data-index="3">
+                    </div>
+                    <div class="col-lg-2">
+                        <br>
+                        <input type="text" name="txtBuscaAno" id="txtBuscaAno" class="form-control form-control-sm title-principal text-uppercase" placeholder="Año Ingreso" data-index="5">
+                    </div>
+                    
+                    <div class="col-md-12">
+                        <br>
+                        <div class="form-group text-center title-principal">
+                            <button type="button" class="btn btn-success text-center title-principal" id="btnBuscar">
+                                <i class="fa fa-search"></i> BUSCAR
+                            </button>
+                        </div>
+                    </div>
+
+            </div>
+            
+        </div>
+    </div>
+    <!--FINAL FILTRADOR BUSCADOR-->
+
+<form id="frmInstrumentos" name="frmInstrumentos" action="" method="POST" class="frmInstrumentos text-uppercase">
+                    <div class="row">
+
+                        <div class="col-sm-9 title-principal">
+                            <div class="form-group">
+                                <label class="text-uppercase" style="font-size:14px;">carrera(*)</label>
+                                <select class="carrera selectOption form-control form-control-sm selectCarrera select2-container select2 select2-primary text-uppercase" name="carrera" id="carrera" style="width:100%;" value="">
+                                    <?php
+                                    //ARCHIVO QUE TRAE LAS CARRERAS REGISTRADAS
+                                    include $_SERVER["DOCUMENT_ROOT"] . "/docs/public/core/rap/view/instrumentos/query/carrera.php";
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3 title-principal">
+                            <div class="form-group">
+                                <label style="font-size:14px;">plan carrera(*)</label>
+                                <select name="planCarrera" id="planCarrera" style="width:100%;" class="planCarrera selectOption form-control form-control-sm planCarrera select2-container select2 select2-primary text-uppercase">
+                                    <?php
+                                    //ARCHIVO QUE TRAE LOS PLANES DE CARRERAS REGISTRADOS
+                                    include $_SERVER["DOCUMENT_ROOT"] . "/docs/public/core/rap/view/instrumentos/query/plan_carrera.php";
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12">
+                            <div class="dropdown-divider"></div>
+                        </div>
+
+                        <div class="col-sm-10 title-principal">
+                            <div class="form-group">
+                                <label for="" class="text-uppercase" style="font-size:14px;">instrumento(*)</label>
+                                <br>
+                                <input type="text" class="tinsNombre form-control form-control-sm text-uppercase" id="instrumento" name="instrumento" placeholder="ingrese nombre instrumento">
+
+                            </div>
+                        </div>
+
+                        <div class="col-sm-2 title-principal">
+                            <div class="form-group">
+                                <label for="" class="text-uppercase" style="font-size:14px;">porcentaje(*)</label>
+                                <br>
+                                <input type="number" class="tinsPorcentaje form-control form-control-sm text-uppercase" id="tinsPorcentaje" name="tinsPorcentaje" placeholder="ingrese porcentaje">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 title-principal">
+                            <div class="form-group">
+                                <label for="" class="text-uppercase" style="font-size:14px;">descripción</label>
+                                <textarea name="tinsDescripcion" id="tinsDescripcion" placeholder="Ingrese Descripción" cols="10" rows="3" class="form-control tinsDescripcion text-uppercase title-principal"></textarea>
+                                <br>
+                                <div id="contador">
+                                    <p style="text-align:right; font-weight:bold; font-size:14px;">MÁXIMNO 250 CARACTERES</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group text-center title-principal">
+                        <button id="btnSave" type="button" class="btnSave btn btn-success text-uppercase" onclick="validaFormInstrumento();"><i class="fa fa-save"></i> guardar</button>
+                    </div>
+                </form>
+
+
+                                    <!--
+                                    <thead class="text-center text-uppercase">
+                                        <tr role="row" style="background-color:#B2CDD3;">
+                                            <th class="sorting text-uppercase">rut</th>
+                                            <th class="sorting text-uppercase">Estudiante</th>
+                                            <th class="sorting text-uppercase">Carrera</th>
+                                            <th class="sorting text-uppercase">plan carrera</th>
+                                            <th class="sorting text-uppercase">cond. admisión</th>
+                                            <th class="sorting text-uppercase">Registro</th>
+                                            <th class="sorting text-uppercase">ingresar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-uppercase">
+                                        <?php foreach ($estudiantes as $estudiante) {
+                                            //VARIABLE QUE PERMITE LA CAPUTRA DE DATOS DEL ESTUDIANTE.
+                                            $datos =
+                                                $estudiante[0] . "||" .
+                                                $estudiante[1] . "||" .
+                                                $estudiante[2] . "||" .
+                                                $estudiante[3] . "||" .
+                                                $estudiante[4] . "||" .
+                                                $estudiante[5] . "||" .
+                                                $estudiante[6] . "||" .
+                                                $estudiante[7] . "||" .
+                                                $estudiante[8] . "||" .
+                                                $estudiante[9] . "||" .
+                                                $estudiante[10] . "||" .
+                                                $estudiante[11] . "||" .
+                                                $estudiante[12] . "||" .
+                                                $estudiante[13] . "||" .
+                                                $estudiante[14] . "||" .
+                                                $estudiante[15] . "||" .
+                                                $estudiante[16] . "||" .
+                                                $estudiante[17] . "||" .
+                                                $estudiante[18] . "||" .
+                                                $estudiante[19] . "||" .
+                                                $estudiante[20] . "||" .
+                                                $estudiante[21] . "||" .
+                                                $estudiante[22]
+                                        ?>
+                                            <tr role="row" class="text-left">
+                                                <td><?php echo $estudiante['estd_rut'] . "-" . $estudiante['estd_dv'] ?></td>
+                                                <td><?php echo $estudiante['estd_nombre1'] . " " . $estudiante['estd_nombre2'] . " " . $estudiante['estd_apellido1'] . " " .  $estudiante['estd_apellido2'] ?></td>
+                                                <td><?php echo $estudiante['carr_codigo'] . " - " . $estudiante['carr_nombre'] ?></td>
+                                                <td class="text-center"><?php echo $estudiante['plan_codigo'] ?></td>
+                                                <td><?php echo $estudiante['cadm_nombre'] ?></td>
+                                                <td><?php echo $estudiante['REGISTRO'] ?></td>
+                                                <td class="text-center">
+                                                    <a href="#" data-role="agregaEstudiante" class="btn btn-warning" type="button" data-toggle="modal" aria-labelledby="mdlActualizarEstudianteLabel" aria-hidden="true" onclick="agregaEstudiante('<?php echo $datos ?>');" data-target="#mdlActualizarEstudiante" id="<?php echo $instrumento['tins_codigo']; ?>">
+                                                        <i class="fa fa-info"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        <?php } ?>
+                                    </tbody>
+                                    -->
+
+
+                                                        <?php foreach ($logros as $logro) { ?>
+                                                            <tr role="row">
+                                                                <td><?php echo $logro["rear_nombre_area"]; ?></td>
+                                                                <td class="text-center"><?php echo $logro["evar_porcentaje_logro"]; ?></td>
+                                                                <td class="text-center"><?php echo $logro["evar_evaluacion_concepto"]; ?></td>
+                                                            </tr>
+                                                        <?php  } ?>
+
+
+<!--LISTADO DE ESTUDIANTES-->
+<!--
+<section class="header" id="tblResultados">
+    <div class="container-fluid title-principal">
+        <div class="row">
+            <div class="col-12">
+                <br>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <table id="tblEstudiantes" class="data-table table table-info table-striped table-bordered title-principal">
+                                    <thead class="text-center text-uppercase">
+                                        <tr role="row">
+                                            <th class="sorting text-uppercase">Registro</th>
+                                            <th class="sorting text-uppercase">Estudiante</th>
+                                            <th class="sorting text-uppercase">Carrera</th>
+                                            <th class="sorting text-uppercase">plan carrera</th>
+                                            <th class="sorting text-uppercase">cond. admisión</th>
+                                            <th class="sorting text-uppercase">evaluar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="text-uppercase">
+                                        <?php foreach ($estudiantes as $estudiante) {
+                                            //VARIABLE QUE PERMITE LA CAPUTRA DE DATOS DEL ESTUDIANTE.
+                                            $datos =
+                                                $estudiante[0] . "||" .
+                                                $estudiante[1] . "||" .
+                                                $estudiante[2] . "||" .
+                                                $estudiante[3] . "||" .
+                                                $estudiante[4] . "||" .
+                                                $estudiante[5] . "||" .
+                                                $estudiante[6] . "||" .
+                                                $estudiante[7] . "||" .
+                                                $estudiante[8] . "||" .
+                                                $estudiante[9] . "||" .
+                                                $estudiante[10] . "||" .
+                                                $estudiante[11] . "||" .
+                                                $estudiante[12] . "||" .
+                                                $estudiante[13] . "||" .
+                                                $estudiante[14] . "||" .
+                                                $estudiante[15] . "||" .
+                                                $estudiante[16] . "||" .
+                                                $estudiante[17] . "||" .
+                                                $estudiante[18] . "||" .
+                                                $estudiante[19] . "||" .
+                                                $estudiante[20] . "||" .
+                                                $estudiante[21] . "||" .
+                                                $estudiante[22]
+                                        ?>
+                                            <tr role="row" class="text-left">
+                                                <td><?php echo $estudiante['estd_rut'] . "-" . $estudiante['estd_dv'] ?></td>
+
+                                                <td><?php echo $estudiante['estd_nombre1'] . " " . $estudiante['estd_nombre2'] . " " . $estudiante['estd_apellido1'] . " " .  $estudiante['estd_apellido2'] ?></td>
+                                                <td><?php echo $estudiante['carr_codigo'] . " - " . $estudiante['carr_nombre'] ?></td>
+                                                <td class="text-center"><?php echo $estudiante['plan_codigo'] ?></td>
+                                                <td><?php echo $estudiante['cadm_nombre'] ?></td>
+                                                <td class="text-center">
+                                                    <a href="#" data-role="agregaEstudiante" class="btn btn-warning" type="button" data-toggle="modal" aria-labelledby="mdlActualizarEstudianteLabel" aria-hidden="true" onclick="agregaEstudiante('<?php echo $datos ?>');" data-target="#mdlActualizarEstudiante" id="<?php echo $instrumento['tins_codigo']; ?>">
+                                                        <i class="fa fa-check"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        <?php } ?>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>-->
+<!--FINAL LISTADO ESTUDIANTES-->
+<!--FINAL CONTAINER-->
+
+        let timerInterval;
+
+        Swal.fire({
+            title: '<p class="text-uppercase title-principal">Buscando Datos</p>',
+            html: '<p class="text-uppercase title-principal">ESTAMOS VERIFICANDO QUE EL RUT EXISTA.<br>TIEMPO DE BUSQÚEDA: <b></b></p>',
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: () => {
+                Swal.showLoading()
+                const b = Swal.getHtmlContainer().querySelector('b')
+                timerInterval = setInterval(() => {
+                    b.textContent = Swal.getTimerLeft()
+                }, 100)
+            },
+            willClose: () => {
+                clearInterval(timerInterval)
+            }
+        }).then((resultado) => {
+            /* Read more about handling dismissals below */
+            if (resultado.dismiss === Swal.DismissReason.timer && resultado.isConfirmed) {
+                //console.log('I was closed by the timer');
+                $.ajax({
+                    type: "POST",
+                    url: "../../../docs/public/core/rap/view/estudiantes/busqueda.php",
+                    dataType: "html",
+                    data: {
+
+                    },
+                    success: function(datos) {
+                        if (datos == true) {
+                            $(location).attr('href', '../../../?menu=listarEstudiantes');
+                        } else if (resultado.isDenied) {
+                            Swal.fire({
+                                title: '<p>Mensaje</p>',
+                                icon: 'error',
+                                html: '<span class="title-principal text-uppercase">Tiempo de espera finalizado, no se econtró la información solicitada..</span>',
+                                confirmButtonColor: '#0d6efd',
+                                confirmButtonText: 'OK'
+                            });
+                        } else {
+
+                        }
+                    }
+                });
+            } else {
+
+            }
+        })
+
+
+SELECT a.estd_rut, a.estd_dv, a.REGISTRO, a.carr_codigo, a.carr_nombre, a.plan_codigo, 
+                                a.estu_anho_ing, a.salu_codigo, a.salu_nombre, a.estu_semestre_ing,
+                                a.ving_codigo, a.ving_nombre, a.cadm_codigo, a.cadm_nombre, a.salu_codigo, a.salu_nombre, 
+                                b.estd_nombre1, b.estd_nombre2, b.estd_apellido1, b.estd_apellido2, 
+                                t.tins_codigo, t.tins_nombre, r.rear_codigo, r.rear_nombre_area
+                                FROM CELUCT.dbo.vista_strap_estudiante_carrera 
+                                AS a INNER JOIN CELUCT.dbo.vista_strap_estudiante AS b ON (b.estd_rut = a.estd_rut AND b.estd_dv = a.estd_dv)
+                                LEFT JOIN CELUCT.rap.tipo_instrumento AS t ON t.carr_codigo = a.carr_codigo
+                                LEFT JOIN CELUCT.rap.registro_area_instrumento AS r ON r.tins_codigo = t.tins_codigo
+                                WHERE a.estd_rut = a.estd_rut
+                                ORDER BY a.estd_rut;
+
+<section id="resultadoEstudiantes">
+    <!--SE CARGARÁN LOS RESULTADOS DE LOS ESTUDIANTES ENCONTRADOS.-->
+    <div class="container-fluid title-principal text-uppercase">
+        <div class="row">
+            <div class="col-lg-12">
+
+            </div>
+        </div>
+    </div>
+    <!--FIN RESULTADOS ENCONTRADOS-->
+</section>
+
+
+
+<tbody class="title-principal" class="text-uppercase cuerpo">
+    <?php foreach ($logros as $logro) {
+        $datoLogro =
+                $logro[0] . "||" .
+                $logro[1] . "||" .
+                $logro[2] . "||" .
+                $logro[3] . "||" .
+                $logro[4] . "|| " .
+                $logro[5] . "|| " .
+                $logro[6] . "||" .
+                $logro[7] . "||" .
+                $logro[8] . "||" .
+                $logro[9] . "||" .
+                $logro[10] . "||" .
+                $logro[11] . "||" .
+                $logro[12] . "||" .
+                $logro[13] . "||" .
+                $logro[14] . "||" .
+                $logro[15] . "||" .
+                                                $logro[16] . "||" .
+                                                $logro[17] . "||" .
+                                                $logro[18] . "||" .
+                                                $logro[19] . "||" .
+                                                $logro[20] . "||" .
+                                                $logro[21] . "||" .
+                                                $logro[22] . "||" .
+                                                $logro[23] . "||" .
+                                                $logro[24] . "||" .
+                                                $logro[25] . "||" .
+                                                $logro[26] . "||" .
+                                                $logro[27] . "||" .
+                                                $logro[28]
+
+                                        ?>
+                                            <tr role="row" class="text-left text-uppercase title-principal">
+                                                <td></td>
+                                                <td><?php echo $logro["REGISTRO"]; ?></td>
+                                                <td><?php echo $logro["estd_rut"] . "-" . $logro["estd_dv"]  ?></td>
+                                                <td><?php echo $logro['estd_nombre1'] . " " . $logro['estd_nombre2'] . " " . $logro['estd_apellido1'] . " " .  $logro['estd_apellido2'] ?></td>
+                                                <td><?php echo $logro["carr_codigo"] . "-" . $logro["carr_nombre"]; ?></td>
+                                                <td class="text-center"><?php echo $logro["plan_codigo"]; ?></td>
+                                                <td><?php echo $logro["tins_nombre"]; ?></td>
+                                                <td><?php echo $logro["rear_nombre_area"]; ?></td>
+                                                <td class="text-center"><?php echo $logro["evar_porcentaje_logro"]; ?></td>
+                                                <td class="text-center"><?php echo $logro["evar_evaluacion_concepto"]; ?></td>
+                                                <td class="text-center">
+                                                    <button href="" class="btn btn-warning" data-toggle="modal" data-target="#mdlListarLogros" type="button" onclick="agregaLogros('<?php echo $datoLogro ?>');">
+                                                        <i class="fa fa-info"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        <?php } ?>
+</tbody>
+
+                                    <tbody class="title-principal">
+                                        <?php foreach ($logros as $logro) {
+                                            $datoLogro =
+                                                $logro[0] . "||" .
+                                                $logro[1] . "||" .
+                                                $logro[2] . "||" .
+                                                $logro[3] . "||" .
+                                                $logro[4] . "|| " .
+                                                $logro[5] . "|| " .
+                                                $logro[6] . "||" .
+                                                $logro[7] . "||" .
+                                                $logro[8] . "||" .
+                                                $logro[9] . "||" .
+                                                $logro[10] . "||" .
+                                                $logro[11] . "||" .
+                                                $logro[12] . "||" .
+                                                $logro[13] . "||" .
+                                                $logro[14] . "||" .
+                                                $logro[15] . "||" .
+                                                $logro[16] . "||" .
+                                                $logro[17] . "||" .
+                                                $logro[18] . "||" .
+                                                $logro[19] . "||" .
+                                                $logro[20] . "||" .
+                                                $logro[21] . "||" .
+                                                $logro[22] . "||" .
+                                                $logro[23] . "||" .
+                                                $logro[24] . "||" .
+                                                $logro[25] . "||" .
+                                                $logro[26] . "||" .
+                                                $logro[27] . "||" .
+                                                $logro[28]
+
+                                        ?>
+                                            <tr role="row" class="text-left text-uppercase title-principal">
+                                                <td></td>
+                                                <td><?php echo $logro["REGISTRO"]; ?></td>
+                                                <td><?php echo $logro["estd_rut"] . "-" . $logro["estd_dv"]  ?></td>
+                                                <td><?php echo $logro['estd_nombre1'] . " " . $logro['estd_nombre2'] . " " . $logro['estd_apellido1'] . " " .  $logro['estd_apellido2'] ?></td>
+                                                <td><?php echo $logro["carr_codigo"] . "-" . $logro["carr_nombre"]; ?></td>
+                                                <td class="text-center"><?php echo $logro["plan_codigo"]; ?></td>
+                                                <td><?php echo $logro["tins_nombre"]; ?></td>
+                                                <td><?php echo $logro["rear_nombre_area"]; ?></td>
+                                                <td class="text-center"><?php echo $logro["evar_porcentaje_logro"]; ?></td>
+                                                <td class="text-center"><?php echo $logro["evar_evaluacion_concepto"]; ?></td>
+                                                <td class="text-center">
+                                                    <button href="" class="btn btn-warning" data-toggle="modal" data-target="#mdlListarLogros" type="button" onclick="agregaLogros('<?php echo $datoLogro ?>');">
+                                                        <i class="fa fa-info"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        <?php } ?>
+                                    </tbody>
